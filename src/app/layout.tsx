@@ -4,7 +4,7 @@ import { type LayoutComponent } from "../types/next-layout";
 
 import "../styles/globals.css";
 
-const inter = Inter();
+const inter = Inter({ subsets: ["latin"] });
 
 const RootLayout: LayoutComponent = ({ children }) => {
   return (
