@@ -1,6 +1,5 @@
-import { httpBatchLink, loggerLink } from "@trpc/client";
-import { createTRPCNext } from "@trpc/next";
-import { type GetInferenceHelpers } from "@trpc/server";
+import { createTRPCProxyClient, httpBatchLink, loggerLink } from "@trpc/client";
+import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import superjson from "superjson";
 
 import { type AppRouter } from "../server/trpc/router/_app";
@@ -11,27 +10,23 @@ const getBaseUrl = () => {
   return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 };
 
-export const trpc = createTRPCNext<AppRouter>({
-  config() {
-    return {
-      transformer: superjson,
-      links: [
-        loggerLink({
-          enabled: (opts) =>
-            process.env.NODE_ENV === "development" ||
-            (opts.direction === "down" && opts.result instanceof Error),
-        }),
-        httpBatchLink({
-          url: `${getBaseUrl()}/api/trpc`,
-        }),
-      ],
-    };
-  },
-  ssr: false,
+export const trpc = createTRPCProxyClient<AppRouter>({
+  transformer: superjson,
+  links: [
+    loggerLink({
+      enabled: (opts) =>
+        process.env.NODE_ENV === "development" ||
+        (opts.direction === "down" && opts.result instanceof Error),
+    }),
+    httpBatchLink({
+      url: `${getBaseUrl()}/api/trpc`,
+    }),
+  ],
 });
 
 /**
  * Inference helpers
- * @example type HelloOutput = RouterTypes['example']['hello']['output']
+ * @example type HelloOutput = RouterOutputs['example']['hello']
  **/
-export type RouterTypes = GetInferenceHelpers<AppRouter>;
+export type RouterInputs = inferRouterInputs<AppRouter>;
+export type RouterOutputs = inferRouterOutputs<AppRouter>;

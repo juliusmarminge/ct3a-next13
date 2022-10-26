@@ -8,6 +8,10 @@
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
+  experimental: {
+    appDir: true,
+    serverComponentsExternalPackages: ["prisma"],
+  },
   swcMinify: true,
   i18n: {
     locales: ["en"],
