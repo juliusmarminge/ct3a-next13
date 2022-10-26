@@ -4,7 +4,7 @@ import { AuthShowcase } from "./auth-preview";
 import { TechnologyCard } from "./technology-card";
 
 const HomePage: PageComponent = async () => {
-  const hello = await trpc.example.hello.query();
+  //const hello = await trpc.example.hello.query();
 
   return (
     <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
@@ -45,7 +45,7 @@ const HomePage: PageComponent = async () => {
         />
       </div>
       <div className="flex w-full items-center justify-center pt-6 text-2xl text-blue-500">
-        {hello.greeting}
+        {/* {hello.greeting} */}
       </div>
       {/* <AuthShowcase /> */}
     </main>
