@@ -4,7 +4,7 @@ import { type LayoutComponent } from "../types/next-layout";
 
 import "../styles/globals.css";
 
-export const inter = Inter();
+const inter = Inter();
 
 const RootLayout: LayoutComponent = ({ children }) => {
   return (
